@@ -14,7 +14,7 @@ public class Main {
 	public Main() {
 
 		int choose = 0;
-
+	
 		while(true) {
 			printMenu();
 			try {
@@ -56,87 +56,94 @@ public class Main {
 
 	public void deleteData() {
 
-		viewData();
+		if (listKaryawan.isEmpty()) {
+			viewData();
+		} else {
 
-		int choose = 0;
-		while (true) {
-			System.out.print("Input nomor urutan yang ingin dihapus: ");
-			try {
-				choose = scan.nextInt();
-			} catch (Exception e) {
-				System.err.println("Inputkan angka");
+			viewData();
+			int choose = 0;
+			while (true) {
+				System.out.print("Input nomor urutan yang ingin dihapus: ");
+				try {
+					choose = scan.nextInt();
+				} catch (Exception e) {
+					System.err.println("Inputkan angka");
+				}
+				scan.nextLine();
+				if ((choose - 1) > listKaryawan.size() && (choose - 1) < 0) {
+					System.err.println("NOMOR TIDAK DITEMUKAN!");
+				} else
+					break;
 			}
-			scan.nextLine();
-			if ((choose - 1) > listKaryawan.size() && (choose - 1) < 0) {
-				System.err.println("NOMOR TIDAK DITEMUKAN!");
-			} else
-				break;
+			listKaryawan.remove(choose - 1);
 		}
-		listKaryawan.remove(choose - 1);
 
 	}
 
 	public void updateData() {
 
-		viewData();
-
-		int choose = 0;
-		while (true) {
-			System.out.print("Input nomor urutan yang ingin diupdate: ");
-			try {
-				choose = scan.nextInt();
-			} catch (Exception e) {
-				System.err.println("Inputkan angka");
+		if (listKaryawan.isEmpty()) {
+			viewData();
+		} else {
+			viewData();
+			int choose = 0;
+			while (true) {
+				System.out.print("Input nomor urutan yang ingin diupdate: ");
+				try {
+					choose = scan.nextInt();
+				} catch (Exception e) {
+					System.err.println("Inputkan angka");
+				}
+				scan.nextLine();
+				if ((choose - 1) > listKaryawan.size() && (choose - 1) < 0) {
+					System.err.println("NOMOR TIDAK DITEMUKAN!");
+				} else
+					break;
 			}
-			scan.nextLine();
-			if ((choose - 1) > listKaryawan.size() && (choose - 1) < 0) {
-				System.err.println("NOMOR TIDAK DITEMUKAN!");
-			} else
+
+			String nama = "";
+			String gender = "";
+			String jabatan = "";
+			float gajiKaryawan = 0;
+
+			while (true) {
+				System.out.print("Input nama karyawan [>=3]: ");
+				nama = scan.nextLine();
+				if (isAlphabetic(nama))
+					break;
+			}
+
+			while (true) {
+				System.out.print("Input jenis kelamin [Laki-laki/Perempuan]: ");
+				gender = scan.nextLine();
+				if (gender.equals("Laki-laki") || gender.equals("Perempuan"))
+					break;
+			}
+
+			while (true) {
+				System.out.print("Input Jabatan [Manager/Supervisor/Admin]: ");
+				jabatan = scan.nextLine();
+				if (jabatan.equals("Manager") || jabatan.equals("Supervisor") || jabatan.equals("Admin"))
+					break;
+			}
+			switch (jabatan) {
+			case "Manager":
+				gajiKaryawan = 8000000;
 				break;
-		}
-
-		String nama = "";
-		String gender = "";
-		String jabatan = "";
-		float gajiKaryawan = 0;
-
-		while (true) {
-			System.out.print("Input nama karyawan [>=3]: ");
-			nama = scan.nextLine();
-			if (isAlphabetic(nama))
+			case "Supervisor":
+				gajiKaryawan = 6000000;
 				break;
-		}
-
-		while (true) {
-			System.out.print("Input jenis kelamin [Laki-laki/Perempuan]: ");
-			gender = scan.nextLine();
-			if (gender.equals("Laki-laki") || gender.equals("Perempuan"))
+			case "Admin":
+				gajiKaryawan = 4000000;
 				break;
-		}
+			}
+			bonusGaji(jabatan);
 
-		while (true) {
-			System.out.print("Input Jabatan [Manager/Supervisor/Admin]: ");
-			jabatan = scan.nextLine();
-			if (jabatan.equals("Manager") || jabatan.equals("Supervisor") || jabatan.equals("Admin"))
-				break;
+			listKaryawan.get(choose - 1).nama = nama;
+			listKaryawan.get(choose - 1).gender = gender;
+			listKaryawan.get(choose - 1).jabatan = jabatan;
+			listKaryawan.get(choose - 1).gajiKaryawan = gajiKaryawan;
 		}
-		switch (jabatan) {
-		case "Manager":
-			gajiKaryawan = 8000000;
-			break;
-		case "Supervisor":
-			gajiKaryawan = 6000000;
-			break;
-		case "Admin":
-			gajiKaryawan = 4000000;
-			break;
-		}
-		bonusGaji(jabatan);
-
-		listKaryawan.get(choose - 1).nama = nama;
-		listKaryawan.get(choose - 1).gender = gender;
-		listKaryawan.get(choose - 1).jabatan = jabatan;
-		listKaryawan.get(choose - 1).gajiKaryawan = gajiKaryawan;
 
 	}
 
